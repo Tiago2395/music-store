@@ -1,10 +1,12 @@
+import { useMemo } from "react";
+
 function Header ({cart}) {
 
     //State derivado:
-    const isEmpty = () => cart.length === 0;
-    const totalToPay = () => cart.reduce((total, item) => {
+    const isEmpty = useMemo(() => cart.length === 0, [cart]);
+    const totalToPay = useMemo(() => cart.reduce((total, item) => {
         return total = total + (item.amount * item.price);
-    }, 0)
+    }, 0), [cart]);
 
     return (
         <header className="py-5 header">
@@ -22,7 +24,7 @@ function Header ({cart}) {
                             <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
 
                             <div id="carrito" className="bg-white p-3">
-                                {isEmpty() ? 
+                                {isEmpty ? 
                                 (<p className="text-center">El carrito esta vacio</p>) : 
                                 (
                                 <>
@@ -73,7 +75,7 @@ function Header ({cart}) {
                                                 )})}
                                         </tbody>
                                     </table>
-                                    <p className="text-end">Total pagar: <span className="fw-bold">${totalToPay()}</span></p>
+                                    <p className="text-end">Total pagar: <span className="fw-bold">${totalToPay}</span></p>
                                     <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                                 </>
                                 )}
