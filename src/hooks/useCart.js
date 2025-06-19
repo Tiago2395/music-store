@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../data/db";
+import { useMemo } from "react";
+
 
 const useCart = () => {
     const initialCart = () => {
@@ -65,6 +67,10 @@ const useCart = () => {
     setCart(updatedCart);
   }
 
+  function clearCart() {
+    setCart([]);
+  }
+
   /* El código anterior hace lo mismo que este pero es más óptimo
   function removeOneFromCart(id) {
     const index = cart.findIndex(guitar => guitar.id === id);
@@ -82,13 +88,22 @@ const useCart = () => {
     setData(db);
   }, []);
 
+  //State derivado:
+    const isEmpty = useMemo(() => cart.length === 0, [cart]);
+    const totalToPay = useMemo(() => cart.reduce((total, item) => {
+        return total = total + (item.amount * item.price);
+    }, 0), [cart]);
+
   return {
     data,
     cart,
     addToCart,
     increaseQuantity,
     removeFromCart,
-    removeOneFromCart
+    removeOneFromCart,
+    clearCart,
+    isEmpty,
+    totalToPay
   }
 }
 

@@ -1,12 +1,7 @@
-import { useMemo } from "react";
 
-function Header ({cart, increaseQuantity, removeFromCart, removeOneFromCart, setCart}) {
+function Header ({cart, increaseQuantity, removeFromCart, removeOneFromCart, clearCart, isEmpty, totalToPay}) {
 
-    //State derivado:
-    const isEmpty = useMemo(() => cart.length === 0, [cart]);
-    const totalToPay = useMemo(() => cart.reduce((total, item) => {
-        return total = total + (item.amount * item.price);
-    }, 0), [cart]);
+    
 
     return (
         <header className="py-5 header">
@@ -83,7 +78,7 @@ function Header ({cart, increaseQuantity, removeFromCart, removeOneFromCart, set
                                 )}
                                 <button 
                                     className="btn btn-dark w-100 mt-3 p-2"
-                                    onClick={() => setCart([])}
+                                    onClick={() => clearCart()}
                                 >
                                 Vaciar Carrito</button>
                             </div>
