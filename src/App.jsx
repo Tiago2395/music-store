@@ -5,8 +5,17 @@ import { db } from "./data/db";
 
 function App() {
 
+  const initialCart = () => {
+    const localStorageItems = localStorage.getItem('cart');
+    return localStorageItems ? JSON.parse(localStorageItems) : [];
+  }
+
   const [data, setData] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(initialCart());
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const MAX_ITEMS = 5;
 
